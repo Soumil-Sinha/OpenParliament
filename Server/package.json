@@ -1,0 +1,21 @@
+{
+  "name": "openparliament-server",
+  "version": "1.0.0",
+  "description": "REST API that serves the OpenParliament iOS app from a local PostgreSQL database.",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "db:setup": "sh db/setup.sh",
+    "db:seed": "psql -v ON_ERROR_STOP=1 -d ${PGDATABASE:-openparliament} -f db/seed.sql",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

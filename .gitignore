@@ -1,0 +1,5 @@
+xcuserdata/
+.DS_Store
+Server/node_modules/
+*.zip
+__MACOSX/

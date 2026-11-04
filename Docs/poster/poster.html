@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OpenParliament Poster</title>
+<style>
+  /* A-series portrait (1 : 1.414). Exported to PDF and PNG by export.sh. */
+  @page { size: 2000px 2828px; margin: 0; }
+  :root {
+    --red: #BC202E;
+    --accent: #4F86BE;
+    --accent-soft: #EAF1F8;
+    --ink: #1d1f23;
+    --ink-2: #3d4148;
+    --muted: #6b7078;
+    --hair: #dfe3e8;
+    --paper: #ffffff;
+    --quiet: #f5f6f8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 2000px; height: 2828px; background: var(--paper); }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Header */
+  header {
+    display: grid;
+    grid-template-columns: 420px 1fr 170px;
+    align-items: center;
+    padding: 34px 60px 28px;
+    border-bottom: 6px solid var(--red);
+  }
+  header .logo { height: 128px; }
+  header .trust { height: 120px; justify-self: end; }
+  header .titles { text-align: center; }
+  header .institute { font-size: 25px; color: var(--ink-2); letter-spacing: .3px; }
+  header .dept { font-size: 24px; color: var(--red); font-weight: 700; margin-top: 4px; }
+  .hero {
+    padding: 34px 60px 10px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+  }
+  .hero h1 { font-size: 96px; letter-spacing: -2px; line-height: 1; }
+  .hero h1 span { color: var(--accent); }
+  .hero .tagline { font-size: 33px; color: var(--ink-2); margin-top: 14px; max-width: 1200px; line-height: 1.3; }
+  .hero .byline { text-align: right; font-size: 25px; color: var(--muted); line-height: 1.55; white-space: nowrap; }
+  .hero .byline b { color: var(--ink); font-size: 30px; }
+
+  main { flex: 1; padding: 22px 60px 0; display: flex; flex-direction: column; gap: 28px; }
+
+  h2 {
+    font-size: 30px; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--red); margin-bottom: 16px; display: flex; align-items: center; gap: 14px;
+  }
+  h2::after { content: ""; flex: 1; height: 2px; background: var(--hair); }
+  p, li { font-size: 23px; line-height: 1.45; color: var(--ink-2); }
+  b { color: var(--ink); }
+
+  /* Intro row */
+  .intro { display: grid; grid-template-columns: 1.25fr 1fr; gap: 44px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-content: start; }
+  .stat { background: var(--quiet); border-radius: 18px; padding: 20px 22px; }
+  .stat .v { font-size: 54px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .stat .l { font-size: 20px; color: var(--muted); margin-top: 8px; }
+  .stat.red .v { color: var(--red); }
+
+  /* Screens */
+  .screens { display: grid; grid-template-columns: repeat(6, 1fr); gap: 26px; }
+  .phone { text-align: center; }
+  .phone img {
+    width: 100%; border-radius: 34px; display: block;
+    border: 7px solid #111; box-shadow: 0 10px 28px rgba(0,0,0,.14);
+  }
+  .phone .cap { font-size: 21px; font-weight: 700; margin-top: 14px; color: var(--ink); }
+  .phone .sub { font-size: 17px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+
+  /* Functions strip */
+  .functions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .fn { display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: start;
+        background: var(--quiet); border-radius: 16px; padding: 16px 16px; }
+  .fn .ic { width: 58px; height: 58px; border-radius: 14px; background: var(--accent);
+            display: grid; place-items: center; }
+  .fn .ic svg { width: 32px; height: 32px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .fn.red .ic { background: var(--red); }
+  .fn h3 { font-size: 23px; margin-bottom: 4px; }
+  .fn p { font-size: 18px; line-height: 1.38; }
+  .figure { border: 2px solid var(--hair); border-radius: 18px; padding: 12px; background: #fff; }
+  .figure img { width: 100%; display: block; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+  .step { font-size: 18px; color: var(--ink-2); line-height: 1.35; border-left: 5px solid var(--accent); padding: 4px 0 4px 12px; }
+  .step.w { border-color: var(--red); }
+  .step.o { border-color: #8a8f98; }
+
+  /* Diagrams */
+  .diagrams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; align-items: start; }
+  .steps { grid-template-columns: 1fr; gap: 8px; }
+
+  footer {
+    margin-top: 26px;
+    background: var(--ink); color: #fff;
+    padding: 26px 60px 30px;
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 50px;
+  }
+  footer h2 { color: #fff; margin-bottom: 12px; }
+  footer h2::after { background: rgba(255,255,255,.2); }
+  footer p, footer li { color: #d7dae0; font-size: 21px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { font-size: 19px; padding: 8px 16px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.35); color: #fff; }
+  .chip.a { background: var(--accent); border-color: var(--accent); }
+  .chip.r { background: var(--red); border-color: var(--red); }
+  footer ul { padding-left: 24px; }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="assets/somaiya-logo.png" alt="Somaiya Vidyavihar University">
+  <div class="titles">
+    <div class="institute"><b>K. J. Somaiya School of Engineering, Mumbai-77</b> (Somaiya Vidyavihar University)</div>
+    <div class="dept">Department of Computer Engineering · iOS App Development with SwiftUI · Semester VII · 2026-27</div>
+  </div>
+  <img class="trust" src="assets/somaiya-trust.png" alt="Somaiya Trust">
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Open<span>Parliament</span></h1>
+    <div class="tagline">A SwiftUI civic-transparency app that links members of Parliament, the bills they shape and the budgets those bills fund — served from a local PostgreSQL database.</div>
+  </div>
+  <div class="byline"><b>Soumil Sinha</b><br>Mini Project<br>SwiftUI · Node.js · PostgreSQL</div>
+</section>
+
+<main>
+
+  <section class="intro">
+    <div>
+      <h2>Problem &amp; Solution</h2>
+      <p>Attendance registers, bill texts, budget documents and audit reports are public, but scattered across PDFs and portals. <b>OpenParliament</b> gathers them into one calm, neutral app where every record links to the related ones: a bill shows who spoke on it and which scheme funds it; a scheme shows how much of its allocation was actually spent and what the auditor found.</p>
+      <p style="margin-top:12px">Data lives in a <b>normalised PostgreSQL database</b>, reaches the app through a <b>REST API</b>, and is held in a single <b>@Observable store</b>. Following a bill writes straight to the database; if the server is down, the app falls back to bundled data.</p>
+    </div>
+    <div>
+      <h2>At a glance</h2>
+      <div class="stats">
+        <div class="stat"><div class="v">4</div><div class="l">tabs · 9 screens</div></div>
+        <div class="stat"><div class="v">17</div><div class="l">database tables</div></div>
+        <div class="stat"><div class="v">3</div><div class="l">SQL views · 3 enums</div></div>
+        <div class="stat"><div class="v">13</div><div class="l">REST endpoints</div></div>
+        <div class="stat red"><div class="v">1</div><div class="l">request loads everything</div></div>
+        <div class="stat red"><div class="v">6/6</div><div class="l">API tests passing</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Screens</h2>
+    <div class="screens">
+      <div class="phone"><img src="../screenshots/01-mps-list.png" alt=""><div class="cap">MPs</div><div class="sub">Search, sort, attendance badge</div></div>
+      <div class="phone"><img src="../screenshots/02-mp-profile.png" alt=""><div class="cap">MP profile</div><div class="sub">Attendance chart, bills, speeches</div></div>
+      <div class="phone"><img src="../screenshots/06-bill-following.png" alt=""><div class="cap">Bill detail</div><div class="sub">Stage stepper, follow button</div></div>
+      <div class="phone"><img src="../screenshots/10-scheme-detail.png" alt=""><div class="cap">Budget scheme</div><div class="sub">Allocation vs. actual spend</div></div>
+      <div class="phone"><img src="../screenshots/12-following.png" alt=""><div class="cap">Following</div><div class="sub">Synced with PostgreSQL</div></div>
+      <div class="phone"><img src="../screenshots/15-offline-mode.png" alt=""><div class="cap">Offline mode</div><div class="sub">Bundled data + retry banner</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Functions</h2>
+    <div class="functions">
+        <div class="fn"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.6c2.6.2 4.4 2 5 5.4"/></svg></div>
+          <div><h3>Track members</h3><p>Attendance across seven sessions, trend, questions asked, committees and every speech on record.</p></div></div>
+        <div class="fn"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h7"/></svg></div>
+          <div><h3>Follow legislation</h3><p>Four-stage progress, plain-language summary, dated history, speakers and the schemes that fund it.</p></div></div>
+        <div class="fn"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+          <div><h3>Audit the budget</h3><p>Four years of allocation vs. expenditure, utilisation, unspent funds and CAG observations.</p></div></div>
+        <div class="fn red"><div class="ic"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg></div>
+          <div><h3>Follow &amp; sync</h3><p>Optimistic follow / unfollow written to <b>bill_follows</b>; rolled back with a notice if the write fails.</p></div></div>
+        <div class="fn red"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9a13 13 0 0 1 18 0M6.5 12.5a8 8 0 0 1 11 0M10 16a3 3 0 0 1 4 0"/><path d="M3 3l18 18"/></svg></div>
+          <div><h3>Resilient</h3><p>Loading, error and offline states; server address configurable for running on a real iPhone.</p></div></div>
+      </div>
+  </section>
+
+  <section class="diagrams">
+    <div>
+      <h2>Data flow</h2>
+      <div class="figure"><img src="../diagrams/dataflow.png" alt="Data flow sequence diagram"></div>
+      <div class="steps">
+        <div class="step"><b>Read:</b> launch → <code>GET /api/snapshot</code> → nested <code>json_agg</code> rows → models → views re-render.</div>
+        <div class="step w"><b>Write:</b> tap Follow → UI updates at once → <code>PUT /api/follows/:id</code> → <code>INSERT … ON CONFLICT</code>.</div>
+        <div class="step o"><b>Offline:</b> server unreachable → “Use offline data” loads the bundled dataset.</div>
+      </div>
+    </div>
+    <div>
+      <h2>Architecture</h2>
+      <div class="figure"><img src="../diagrams/architecture.png" alt="Three-tier architecture"></div>
+    </div>
+    <div>
+      <h2>Database</h2>
+      <div class="figure"><img src="../diagrams/er.png" alt="Entity relationship diagram"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>
+    <h2>Technology</h2>
+    <div class="chips">
+      <span class="chip a">SwiftUI</span><span class="chip a">Observation</span><span class="chip a">Swift Charts</span>
+      <span class="chip a">NavigationStack</span><span class="chip a">async / await</span><span class="chip a">URLSession</span>
+      <span class="chip r">Node.js</span><span class="chip r">node-postgres</span><span class="chip r">REST · JSON</span>
+      <span class="chip">PostgreSQL 15</span><span class="chip">3NF schema</span><span class="chip">Views &amp; enums</span><span class="chip">node --test</span>
+    </div>
+  </div>
+  <div>
+    <h2>Conclusion &amp; future scope</h2>
+    <p>A static prototype became a complete three-tier product: relational storage, a thin API and a reactive SwiftUI client with offline resilience.</p>
+    <ul style="margin-top:8px">
+      <li>Push alerts when a followed bill changes stage</li>
+      <li>Import real open-data records · full-text search over speeches</li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

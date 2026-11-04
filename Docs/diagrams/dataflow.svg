@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4F86BE"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#BC202E"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/></marker>
+  </defs>
+  <rect width="1600" height="980" fill="#ffffff"/>
+  <text x="800" y="52" text-anchor="middle" font-size="34" font-weight="700" fill="#1d1f23">Data Flow in OpenParliament</text>
+  <text x="800" y="86" text-anchor="middle" font-size="19" fill="#6b7078">Blue: read path at launch · Red: follow a bill (write path) · Gray: offline fallback</text>
+
+  <!-- lanes -->
+  <g font-size="22" font-weight="700" text-anchor="middle">
+    <rect x="40" y="120" width="250" height="70" rx="12" fill="#1d1f23"/><text x="165" y="163" fill="#fff">Citizen (User)</text>
+    <rect x="370" y="120" width="300" height="70" rx="12" fill="#4F86BE"/><text x="520" y="163" fill="#fff">SwiftUI Views</text>
+    <rect x="750" y="120" width="300" height="70" rx="12" fill="#4F86BE"/><text x="900" y="163" fill="#fff">ParliamentStore + API</text>
+    <rect x="1130" y="120" width="200" height="70" rx="12" fill="#BC202E"/><text x="1230" y="163" fill="#fff">Node.js API</text>
+    <rect x="1380" y="120" width="190" height="70" rx="12" fill="#3d4148"/><text x="1475" y="163" fill="#fff">PostgreSQL</text>
+  </g>
+  <g stroke="#d6dbe2" stroke-width="2" stroke-dasharray="4 6">
+    <line x1="165" y1="190" x2="165" y2="940"/><line x1="520" y1="190" x2="520" y2="940"/>
+    <line x1="900" y1="190" x2="900" y2="940"/><line x1="1230" y1="190" x2="1230" y2="940"/>
+    <line x1="1475" y1="190" x2="1475" y2="940"/>
+  </g>
+
+  <g font-size="17" fill="#1d1f23">
+    <!-- Read path -->
+    <line x1="165" y1="240" x2="512" y2="240" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="180" y="230">1  Opens the app</text>
+    <line x1="520" y1="290" x2="892" y2="290" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="535" y="280">2  .task { await store.load() }</text>
+    <line x1="900" y1="340" x2="1222" y2="340" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="915" y="330">3  GET /api/snapshot + /api/follows</text>
+    <line x1="1230" y1="390" x2="1467" y2="390" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="1240" y="380">4  SELECT … json_agg</text>
+    <line x1="1475" y1="440" x2="1238" y2="440" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="1250" y="465">5  Nested rows</text>
+    <line x1="1230" y1="490" x2="908" y2="490" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="925" y="515">6  JSON (DTOs) → Models</text>
+    <line x1="900" y1="540" x2="528" y2="540" stroke="#4F86BE" stroke-width="3" marker-end="url(#a)"/>
+    <text x="545" y="565">7  @Observable change → re-render</text>
+
+    <!-- Write path -->
+    <line x1="165" y1="620" x2="512" y2="620" stroke="#BC202E" stroke-width="3" marker-end="url(#r)"/>
+    <text x="180" y="610">8  Taps “Follow this bill”</text>
+    <line x1="520" y1="670" x2="892" y2="670" stroke="#BC202E" stroke-width="3" marker-end="url(#r)"/>
+    <text x="535" y="660">9  setFollowing(true) — optimistic UI</text>
+    <line x1="900" y1="720" x2="1222" y2="720" stroke="#BC202E" stroke-width="3" marker-end="url(#r)"/>
+    <text x="915" y="710">10  PUT /api/follows/:billID</text>
+    <line x1="1230" y1="770" x2="1467" y2="770" stroke="#BC202E" stroke-width="3" marker-end="url(#r)"/>
+    <text x="1240" y="760">11  INSERT … ON CONFLICT</text>
+    <line x1="1230" y1="820" x2="908" y2="820" stroke="#BC202E" stroke-width="3" marker-end="url(#r)"/>
+    <text x="925" y="845">12  204 No Content (or roll back + notice)</text>
+
+    <!-- Offline -->
+    <line x1="900" y1="900" x2="528" y2="900" stroke="#8a8f98" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#g)"/>
+    <text x="545" y="890" fill="#6b7078">Server unreachable → “Use offline data” loads bundled SampleData</text>
+  </g>
+</svg>

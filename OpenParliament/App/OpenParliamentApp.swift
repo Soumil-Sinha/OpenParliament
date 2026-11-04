@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct OpenParliamentApp: App {
+    /// Owned here so every tab and pushed screen shares one copy of the data.
+    @State private var store = ParliamentStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootTabView()
+                .environment(store)
         }
     }
 }
